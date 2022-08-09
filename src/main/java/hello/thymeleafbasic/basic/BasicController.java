@@ -49,6 +49,16 @@ public class BasicController {
         model.addAttribute("userMap", map);
         return "basic/variable";
     }
+    @Data
+    static class User {
+        private String username;
+        private int age;
+        public User(String username, int age) {
+            this.username = username;
+            this.age = age;
+        }
+    }
+
 
     @GetMapping("/basic-objects")
     public String basicObjects(HttpSession session) {
@@ -70,8 +80,8 @@ public class BasicController {
 
     @GetMapping("/link")
     public String link(Model model) {
-        model.addAttribute("param1", "data1");
-        model.addAttribute("param2", "data2");
+        model.addAttribute("p1", "a");
+        model.addAttribute("p2", "b");
         return "basic/link";
     }
 
@@ -93,10 +103,18 @@ public class BasicController {
         return "basic/attribute";
     }
 
+
     @GetMapping("/each")
     public String each(Model model) {
         addUsers(model);
         return "basic/each";
+    }
+    private void addUsers(Model model) {
+        List<User> list = new ArrayList<>();
+        list.add(new User("userA", 10));
+        list.add(new User("userB", 20));
+        list.add(new User("userC", 30));
+        model.addAttribute("users", list);
     }
 
     @GetMapping("/condition")
@@ -124,21 +142,4 @@ public class BasicController {
         return "basic/javascript";
     }
 
-    private void addUsers(Model model) {
-        List<User> list = new ArrayList<>();
-        list.add(new User("userA", 10));
-        list.add(new User("userB", 20));
-        list.add(new User("userC", 30));
-        model.addAttribute("users", list);
-    }
-
-    @Data
-    static class User {
-        private String username;
-        private int age;
-        public User(String username, int age) {
-            this.username = username;
-            this.age = age;
-        }
-    }
 }
